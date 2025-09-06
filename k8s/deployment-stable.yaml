@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shift-scheduler-stable
+  namespace: academy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shift-scheduler
+      version: stable
+  template:
+    metadata:
+      labels:
+        app: shift-scheduler
+        version: stable
+    spec:
+      containers:
+        - name: shift-scheduler
+          image: your-dockerhub-username/shift-scheduler:stable
+          ports:
+            - containerPort: 7681
+          volumeMounts:
+            - mountPath: /data
+              name: shift-data
+      volumes:
+        - name: shift-data
+          persistentVolumeClaim:
+            claimName: shift-pvc
