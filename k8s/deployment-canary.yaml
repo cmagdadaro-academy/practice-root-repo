@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shift-scheduler-canary
+  namespace: academy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shift-scheduler
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: shift-scheduler
+        version: canary
+    spec:
+      containers:
+        - name: shift-scheduler
+          image: your-dockerhub-username/shift-scheduler:latest
+          ports:
+            - containerPort: 7681
+          volumeMounts:
+            - mountPath: /data
+              name: shift-data
+      volumes:
+        - name: shift-data
+          persistentVolumeClaim:
+            claimName: shift-pvc
