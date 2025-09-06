@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shift-svc
+  namespace: academy
+spec:
+  selector:
+    app: shift-scheduler
+  ports:
+    - port: 80
+      targetPort: 7681
+      protocol: TCP
